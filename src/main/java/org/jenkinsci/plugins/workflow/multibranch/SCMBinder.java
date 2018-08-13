@@ -135,9 +135,7 @@ class SCMBinder extends FlowDefinition {
             }
             scm = scmSource.build(head, rev);
         } else {
-            listener.error("Could not determine exact tip revision of " + branch.getName() + "; falling back to nondeterministic checkout");
-            // Build might fail later anyway, but reason should become clear: for example, branch was deleted before indexing could run.
-            scm = branch.getScm();
+            throw new IllegalStateException("Gelato custom addition - Could not determine exact tip revision of " + branch.getName());
         }
         return new CpsScmFlowDefinition(scm, scriptPath).create(handle, listener, actions);
     }
